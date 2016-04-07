@@ -1,4 +1,4 @@
-# Aero Gear Push - Appcelerator Titanium
+# AeroGear Push - Appcelerator Titanium
 
 This is a commonJS module for Appcelerator Titanium. 
 
