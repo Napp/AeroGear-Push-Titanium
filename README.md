@@ -1,14 +1,13 @@
-# AeroGear Push - Appcelerator Titanium
+# AeroGear Push - Appcelerator Titanium 
 
 This is a commonJS module for Appcelerator Titanium. 
-
 
 The AeroGear UnifiedPush Server is a server that allows sending push notifications to different (mobile) platforms. Read more here: https://github.com/aerogear/aerogear-unifiedpush-server
 
 
 ## How to use
 
-Notice: On Android we need a GCM native module. Please download and add `aerogear-titanium-push` to your project: https://github.com/aerogear/aerogear-titanium-push 
+Notice: On Android we need a GCM native module. Please download and add `aerogear-titanium-push` to your project: https://github.com/aerogear/aerogear-titanium-push [![gitTio](http://gitt.io/badge.svg)](http://gitt.io/component/org.jboss.aerogear.push)
 
 
 Add the following code to `alloy.js`. 
@@ -19,15 +18,15 @@ Add the following code to `alloy.js`.
 // Napp AeroGear Push
 var AeroGearPush = require('AeroGearPush').init({
 	pushServerURL: "<pushServerURL e.g http(s)//host:port/context >",
-    android: {
-        senderID: "<senderID e.g Google Project ID only for android>",
-        variantID: "<variantID e.g. 1234456-234320>",
-        variantSecret: "<variantSecret e.g. 1234456-234320>"
-    },
-    ios: {
-        variantID: "<variantID e.g. 1234456-234320>",
-        variantSecret: "<variantSecret e.g. 1234456-234320>"
-    }
+	android: {
+		senderID: "<senderID e.g Google Project ID only for android>",
+		variantID: "<variantID e.g. 1234456-234320>",
+		variantSecret: "<variantSecret e.g. 1234456-234320>"
+	},
+	ios: {
+		variantID: "<variantID e.g. 1234456-234320>",
+		variantSecret: "<variantSecret e.g. 1234456-234320>"
+	}
 });
 
 
@@ -47,10 +46,10 @@ AeroGearPush.registerDevice({
     	setTimeout(function(){
 	    	
 		    var dialog = Ti.UI.createAlertDialog({
-				title: L('New Notification'),
-		        message: JSON.stringify(event),
-		        buttonNames: [L('View'),L('Cancel')],
-		        cancel: 1
+			title: L('New Notification'),
+			message: JSON.stringify(event),
+			buttonNames: [L('View'),L('Cancel')],
+			cancel: 1
 		    });
 		    dialog.addEventListener("click", function(event) {
 		        dialog.hide();
@@ -72,6 +71,9 @@ AeroGearPush.registerDevice.subscribeDevice({
 ```
 
 ## Changelog
+
+* 1.1.0
+  * Android: Updated to use AeroGear Titainum GCM module
 
 * 1.0.0
   * Initial version. 
