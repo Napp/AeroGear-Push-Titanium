@@ -79,6 +79,8 @@ TiPush.prototype.registerDevice = function(_prams) {
 
 	if (OS_ANDROID) {
 		GCM.registerPush({
+			categories: extraOptions.categories,
+			alias: extraOptions.alias,
 			senderID: that.senderId,
 			variantID : that.variantID,
 			variantSecret : that.variantSecret,
