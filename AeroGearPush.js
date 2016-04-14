@@ -20,7 +20,7 @@ var logger = ENV_PROD ? function() {} : function(message, data) {
 };
 
 if (OS_ANDROID) {
-	var GCM = require("nl.vanvianen.android.gcm");
+	var GCM = require("org.jboss.aerogear.push");
 }
 
 function TiPush(e) {
@@ -50,34 +50,14 @@ TiPush.prototype.registerDevice = function(_prams) {
 		extraOptions = _prams.extraOptions || {},
 		pnOptions = _prams.pnOptions || {};
 
-	if (OS_ANDROID) {
-		// overrule the default options
-		_.defaults(pnOptions, {
-			notificationSettings: {
-				messageKey: "alert", // AeroGear specific
-				smallIcon: 'appicon.png', // Place icon in platform/android/res/drawable/notification_icon.png
-				largeIcon: 'appicon.png', // Same
-				backgroundOnly: false, // Whether the app should only be notified when it's in the background
-				vibrate: true, // Whether the phone should vibrate
-				//insistent: false, // Whether the notification should be insistent
-				//localOnly: false, // Whether this notification should be bridged to other devices
-				//priority: 2 // Notification priority, from -2 to 2
-			}
-		});
-		// ID: aerogear-push-id
-	}
-
 	function deviceTokenSuccess(e) {
-		if (OS_ANDROID) {
-			Ti.API.debug(TAG + 'Device Token:', e.registrationId);
-			token = e.registrationId;
-		} else if (OS_IOS) {
+		if (OS_IOS) {
 			Ti.API.debug(TAG + 'Device Token:', e.deviceToken);
 			token = e.deviceToken;
+			that.token = token;
+	
+			subscribePushServer(extraOptions, that);
 		}
-		that.token = token;
-
-		subscribePushServer(extraOptions, that);
 
 		onTokenSuccess && onTokenSuccess(e);
 	}
@@ -99,32 +79,17 @@ TiPush.prototype.registerDevice = function(_prams) {
 
 	if (OS_ANDROID) {
 		GCM.registerPush({
-			senderId: that.senderId,
-			notificationSettings: pnOptions.notificationSettings,
+			categories: extraOptions.categories,
+			alias: extraOptions.alias,
+			senderID: that.senderId,
+			variantID : that.variantID,
+			variantSecret : that.variantSecret,
+			pushServerURL: that.pushServerURL,
 			success: deviceTokenSuccess,
 			error: deviceTokenError,
-			callback: receivePush
+			onNotification: receivePush
 		});
 
-		// When the app is started
-		var lastData = GCM.getLastData();
-		if (lastData) {
-			onStart({
-				data: lastData
-			});
-			GCM.clearLastData();
-		}
-
-		// And when the app is resumed
-		Ti.Android.currentActivity.addEventListener("resume", function() {
-			var lastData = GCM.getLastData();
-			if (lastData) {
-				onResume({
-					data: lastData
-				});
-				GCM.clearLastData();
-			}
-		});
 
 	} else if (OS_IOS) {
 		// Check if the device is running iOS 8 or later

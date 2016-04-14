@@ -8,7 +8,7 @@ The AeroGear UnifiedPush Server is a server that allows sending push notificatio
 
 ## How to use
 
-Notice: On Android we need a GCM native module. Please download and add `nl.vanvianen.android.gcm` to your project: https://github.com/morinel/gcmpush 
+Notice: On Android we need a GCM native module. Please download and add `aerogear-titanium-push` to your project: https://github.com/aerogear/aerogear-titanium-push 
 
 
 Add the following code to `alloy.js`. 
