@@ -1,7 +1,7 @@
 /**
  * AeroGear Titanium Library
  * Module to register iOS or Android device for AeroGear Unified Push
- * @version 1.0.0
+ * @version 1.1.0
  * Copyright Napp A/S
  * www.napp.dk
  *
