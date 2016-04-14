@@ -87,11 +87,19 @@ TiPush.prototype.registerDevice = function(_prams) {
 	}
 
 	function receivePush(e) {
-		//logger(TAG + "onReceive Push callback =", e);
-
 		if (OS_IOS) {
 			// Reset badge
 			Titanium.UI.iPhone.appBadge = null;
+            var message = e.data.aps,
+                alert = message.alert;
+            message.payload = e.data;    
+            delete message.payload.aps;
+            
+            if (alert.hasOwnProperty('body')) {
+                message.alert = alert.body;
+                message['alert-extra'] = alert;
+            }
+            e = message;
 		}
 
 		onReceive(e);

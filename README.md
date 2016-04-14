@@ -40,7 +40,7 @@ AeroGearPush.registerDevice({
     	// Called when a notification is received and the app is in the foreground 	
     	
         // Track Push Open
-        var pushId = event.data["aerogear-push-id"];
+        var pushId = event.payload["aerogear-push-id"];
         AeroGearPush.trackPushOpenEvent(pushId);
     	
     	// delay the dialog message
@@ -48,7 +48,7 @@ AeroGearPush.registerDevice({
 	    	
 		    var dialog = Ti.UI.createAlertDialog({
 				title: L('New Notification'),
-		        message: JSON.stringify(event.data),
+		        message: JSON.stringify(event),
 		        buttonNames: [L('View'),L('Cancel')],
 		        cancel: 1
 		    });
